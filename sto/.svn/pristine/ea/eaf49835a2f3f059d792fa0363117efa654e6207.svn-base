@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   
+	<settings>
+		<!-- 开启字段名和属性名驼峰似的匹配 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	<!-- 别名定义 -->
+	 <typeAliases>
+	 	<!-- 定义单个别名 -->
+	 	<!-- <typeAlias type="cn.itcast.mybatis.po.User" alias="user"/> -->
+		<!-- 包扫描方式定义别名
+		扫描一个包下边所有的pojo类，别名自动定义为：类名（首字母小写或大写都可以）
+		 -->
+		<package name="com.sto.entity"/>
+	 </typeAliases>
+	<!-- 和spring整合后 environments配置将废除-->
+	
+	
+	<!-- 配置mapper.xml文件 -->
+	<!-- <mappers>
+	    <mapper resource="cn/itcast/ssm/dao/old/User.xml" />
+	    
+	</mappers> -->
+
+</configuration>

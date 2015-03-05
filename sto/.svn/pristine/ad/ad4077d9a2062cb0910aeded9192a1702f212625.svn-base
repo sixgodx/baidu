@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sto.mapper.SiteMapper">
+
+	<sql id="siteCondition">
+		<if test="LEV != null and LEV != ''">
+			AND SITE_LEV = #{LEV,jdbcType=CHAR}
+		</if>
+		<if test="SYNC_TIMESTAMP != null and SYNC_TIMESTAMP != ''">
+			AND TIMESTAMP > TO_DATE(#{SYNC_TIMESTAMP}, 'yyyy-MM-dd hh24:mi:ss')
+		</if>
+	</sql>
+
+	<select id="findSiteByCondition" resultType="Site">
+		SELECT SITE_SYS_ID AS siteSysId,
+		SITE_NAME AS siteName,
+		SITE_SYS_ID_SUP AS siteSysIdSup,
+		SITE_CODE_E3 AS siteCodeE3,
+		SITE_NAME_E3 AS siteNameE3,
+		SITE_CODE_E3_SUP AS siteCodeE3Sup,
+		SITE_NAME_E3_SUP AS siteNameE3Sup,
+		CITY_NAME AS cityName,
+		CITY_CODE AS cityCode,
+		SITE_LEV AS siteLev,DIRECT AS direct,
+		MGR AS mgr,MGR_TEL AS mgrTel,
+		MGR_CELLPHONE AS mgrCellphone,
+		MGR_EMAIL AS mgrEmail,ENABLED AS enabled,
+		TO_CHAR(TIMESTAMP, 'yyyy-MM-dd hh24:mi:ss') AS timestamp 
+		FROM BSC_SITE
+		<where>
+			<include refid="siteCondition"/>
+		</where>
+	</select>
+</mapper>

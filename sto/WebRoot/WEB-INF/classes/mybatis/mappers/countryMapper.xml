@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sto.mapper.CountryMapper">
+	<select id="findCountryByCondition" resultType="Country">
+
+		SELECT COUNTRY_SYS_ID as countrySysId,COUNTRY_NAME_CN as countryNameCn,
+		COUNTRY_NAME_EN as countryNameEn,DOMAIN as domain,TEL_CODE as telcode,
+		TIMEZONE as timezone,ENABLED as enabled,
+		TO_CHAR(SYNC_TIMESTAMP, 'yyyy-MM-dd hh24:mi:ss') as syncTimestamp FROM BSC_COUNTRY
+		<if test="SYNC_TIMESTAMP != null">
+    		WHERE SYNC_TIMESTAMP > TO_DATE(#{SYNC_TIMESTAMP}, 'yyyy-MM-dd hh24:mi:ss')
+    	</if>
+	</select>
+</mapper>

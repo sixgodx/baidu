@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sto.mapper.TransMapper">
+
+	<sql id="transCondition">
+		<if test="LEV != null and LEV != ''">
+			AND TRANS_LEV = #{LEV,jdbcType=CHAR}
+		</if>
+		<if test="SYNC_TIMESTAMP != null and SYNC_TIMESTAMP != ''">
+			AND SYNC_TIMESTAMP > TO_DATE(#{SYNC_TIMESTAMP}, 'yyyy-MM-dd hh24:mi:ss')
+		</if>
+	</sql>
+
+	<select id="findTransByCondition" resultType="Trans">
+		SELECT TRANS_SYS_ID AS transSysId,
+		TRANS_NAME AS transName,TRANS_CODE AS transCode,
+		TRANS_LEV AS transLev,TRANS_CODE_SUB AS transCodeSub,
+		ADMINDIV_SYS_ID AS admindivSysId,
+		MANAGER AS manager,MANAGER_TEL_O AS managerTelo,
+		MANAGER_TEL_M AS managerTelm,
+		MANAGER_EMAIL AS managerEmail,
+		BL_FINANCE AS blFinance,ENABLED AS enabled,
+		TO_CHAR(SYNC_TIMESTAMP, 'yyyy-MM-dd hh24:mi:ss') AS syncTimestamp 
+		FROM BSC_TRANS
+		<where>
+			<include refid="transCondition"/>
+		</where>
+	</select>
+</mapper>

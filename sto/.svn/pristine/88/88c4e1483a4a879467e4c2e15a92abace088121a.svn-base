@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sto.mapper.AdminDIVMapper">
+	<select id="findAdminDivById" parameterType="String" resultType="AdminDIV">
+		select * from BSC_ADMINDIV where ADMINDIV_SYS_ID =
+		#{id,jdbcType=VARCHAR}
+	</select>
+	
+	<sql id="admindivCondition">
+		<if test="LEV != null and LEV != ''">
+			AND ADMINDIV_LEV = #{LEV,jdbcType=CHAR}
+		</if>
+		<if test="SYNC_TIMESTAMP != null and SYNC_TIMESTAMP != ''">
+			AND SYNC_TIMESTAMP > TO_DATE(#{SYNC_TIMESTAMP}, 'yyyy-MM-dd hh24:mi:ss')
+		</if>
+	</sql>
+
+	<select id="findAll" resultType="AdminDIV">
+		select
+		ADMINDIV_SYS_ID as
+		admindivSysId ,ADMINDIV_NAME as admindivName,ADMINDIV_CODE as
+		admindivCode,ADMINDIV_LEV as admindivLev,ADMINDIV_CODE_SUP as
+		admindivCodeSup,ADMINDIV_PINYIN as admindivPinYin,
+		ENABLED as enabled,
+		TO_CHAR(SYNC_TIMESTAMP,'yyyy-MM-dd hh24:mi:ss') syncTimestamp FROM BSC_ADMINDIV
+    	<where>
+    		<include refid="admindivCondition"/>
+    	</where>
+	</select>
+
+</mapper>

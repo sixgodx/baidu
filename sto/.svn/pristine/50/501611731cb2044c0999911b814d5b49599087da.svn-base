@@ -1,0 +1,21 @@
+package com.sto.utils;
+
+public class CommonMethod {
+
+	public static final String GETADMINDIV = "getAdminDiv";
+
+	public static final String GETCOUNTRY = "getCountry";
+
+	public static final String GETAREA = "getArea";
+
+	public static final String GETDEPARTMENT = "getDepartment";
+
+	public static final String GETTRANS = "getTrans";
+
+	public static final String GETSITE = "getSite";
+
+	public static final String STATUS = "0";
+
+	
+
+}

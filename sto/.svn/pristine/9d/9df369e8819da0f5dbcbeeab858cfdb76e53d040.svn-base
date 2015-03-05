@@ -1,0 +1,54 @@
+package com.sto.action;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.alibaba.fastjson.JSONObject;
+
+public class BaseAction {
+
+	public void judgeData(HttpServletRequest request,Map<String, Object> map){
+
+		String data = request.getParameter("data");
+		// 判断客户端传递过来的json数据
+		if (data != null) {
+			JSONObject obj = JSONObject.parseObject(data);
+			// 判断json里的时间戳是否为空
+			if (obj.get("incTimestamp") != null) {
+				String time = obj.get("incTimestamp").toString();
+
+				// 判断取出的时间是否有填，如果没有填，将null放进map中
+				if (time.equals("")) {
+					map.put("SYNC_TIMESTAMP", null);
+				} else {
+
+					map.put("SYNC_TIMESTAMP", time);
+				}
+
+			} else {
+				// obj.get("incTimestamp")为null
+				map.put("SYNC_TIMESTAMP", null);
+			}
+
+			// 判断lev，同时间戳一样
+			if (obj.get("lev") != null) {
+
+				String lev = obj.get("lev").toString();
+				if (lev.equals("")) {
+					map.put("ADMINDIV_LEV", null);
+				} else {
+
+					map.put("ADMINDIV_LEV", lev);
+				}
+			} else {
+
+				// lev为空
+				map.put("ADMINDIV_LEV", null);
+			}
+
+		} else {
+			map.put("SYNC_TIMESTAMP", request.getParameter("timestamp"));
+		}
+	}
+}
